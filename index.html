@@ -7,11 +7,11 @@
 		<link rel="stylesheet" href="assets/css/base.css">
 		<link rel="stylesheet" href="assets/css/index.css">
 	</head>
-	<body>
+	<body ng-app="todo" ng-controller="todoCtrl">
 		<section class="todoapp">
 			<header class="header">
 				<h1>todos</h1>
-				<input class="new-todo" placeholder="What needs to be done?" autofocus>
+				<input class="new-todo" placeholder="What needs to be done?" autofocus ng-model="task" ng-keyup="addTask($event)">
 			</header>
 			<!-- This section should be hidden by default and shown when there are todos -->
 			<section class="main">
@@ -20,28 +20,21 @@
 				<ul class="todo-list">
 					<!-- These are here just to show the structure of the list items -->
 					<!-- List items should get the class `editing` when editing and `completed` when marked as completed -->
-					<li class="completed">
+					<li ng-repeat="item in taskList" ng-class="{'completed':item.isCompleted}">
 						<div class="view">
-							<input class="toggle" type="checkbox" checked>
-							<label>Taste JavaScript</label>
-							<button class="destroy"></button>
+							<input class="toggle" type="checkbox" ng-model="item.isCompleted">
+							<label>{{item.name}}</label>
+							<button class="destroy" ng-click="deleteTask(item)"></button>
 						</div>
 						<input class="edit" value="Create a TodoMVC template">
 					</li>
-					<li>
-						<div class="view">
-							<input class="toggle" type="checkbox">
-							<label>Buy a unicorn</label>
-							<button class="destroy"></button>
-						</div>
-						<input class="edit" value="Rule the web">
-					</li>
+					
 				</ul>
 			</section>
 			<!-- This footer should hidden by default and shown when there are todos -->
 			<footer class="footer">
 				<!-- This should be `0 items left` by default -->
-				<span class="todo-count"><strong>0</strong> item left</span>
+				<span class="todo-count"><strong>{{ unCompletedTaskNum()}}</strong> item left</span>
 				<!-- Remove this if you don't implement routing -->
 				<ul class="filters">
 					<li>
@@ -66,5 +59,7 @@
 			<p>Created by <a href="http://todomvc.com">you</a></p>
 			<p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
 		</footer>
+		<script src="angular/angular.min.js"></script>
+		<script src="assets/js/app.js"></script>
 	</body>
 </html>
